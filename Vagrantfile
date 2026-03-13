@@ -25,7 +25,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "dc01", primary: true do |dc|
     dc.vm.box = "gusztavvargadr/windows-server-2019-standard"
     dc.vm.hostname = "DC01"
-    dc.vm.network "private_network", ip: DC_IP, virtualbox__intnet: " umbrella_net"
+    dc.vm.network "private_network", ip: DC_IP, virtualbox__intnet: "umbrella_net"
     dc.vm.communicator = "winrm"
     dc.winrm.username = ADMIN_USER
     dc.winrm.password = ADMIN_PASS
@@ -61,7 +61,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "srv01" do |srv|
     srv.vm.box = "gusztavvargadr/windows-server-2016-standard"
     srv.vm.hostname = "SRV01"
-    srv.vm.network "private_network", ip: SRV_IP, virtualbox__intnet: " umbrella_net"
+    srv.vm.network "private_network", ip: SRV_IP, virtualbox__intnet: "umbrella_net"
     srv.vm.communicator = "winrm"
     srv.winrm.username = ADMIN_USER
     srv.winrm.password = ADMIN_PASS
@@ -86,7 +86,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "ws01" do |ws|
     ws.vm.box = "gusztavvargadr/windows-10"
     ws.vm.hostname = "WS01"
-    ws.vm.network "private_network", ip: WS_IP, virtualbox__intnet: " umbrella_net"
+    ws.vm.network "private_network", ip: WS_IP, virtualbox__intnet: "umbrella_net"
     ws.vm.communicator = "winrm"
     ws.winrm.username = ADMIN_USER
     ws.winrm.password = ADMIN_PASS
@@ -111,7 +111,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "kali" do |kali|
     kali.vm.box = "kalilinux/rolling"
     kali.vm.hostname = "kali"
-    kali.vm.network "private_network", ip: KALI_IP, virtualbox__intnet: " umbrella_net"
+    kali.vm.network "private_network", ip: KALI_IP, virtualbox__intnet: "umbrella_net"
     kali.vm.boot_timeout = 600
 
     kali.vm.provider "virtualbox" do |vb|
