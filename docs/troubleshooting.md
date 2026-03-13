@@ -130,17 +130,28 @@ Provisioning takes longer than 45 minutes, or machines appear to hang during set
 Ensure your host system meets the minimum requirements:
 
 - **RAM**: 24 GB minimum (32 GB recommended)
+  - Calculation: DC01 (4 GB) + SRV01 (2 GB) + 4× WS (8 GB) + UBSRV01 (2 GB) + Kali (4 GB) = 20 GB for VMs + 4 GB for host OS = 24 GB minimum
 - **CPU**: 8 cores minimum
 - **Disk**: 200 GB free space
 
 #### Adjust VM Resources
 
-Edit the `Vagrantfile` to reduce resource allocation if your system is constrained:
+Edit the `Vagrantfile` to reduce resource allocation if your system is constrained.
+
+Find the VM definition block and modify the provider settings:
 
 ```ruby
-# Example: Reduce DC01 memory from 4096 to 2048
-vb.memory = 2048
-vb.cpus   = 1
+# Example: Reduce DC01 memory from 4096 MB to 2048 MB
+config.vm.define "dc01", primary: true do |dc|
+  # ... other configuration ...
+  
+  dc.vm.provider "virtualbox" do |vb|
+    vb.name   = "0xLab-DC01"
+    vb.memory = 2048  # Changed from 4096
+    vb.cpus   = 1     # Changed from 2
+    vb.gui    = false
+  end
+end
 ```
 
 **Note**: Reducing resources may affect lab performance and some attacks may not work correctly.
