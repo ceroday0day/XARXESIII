@@ -27,12 +27,32 @@
 │  │ - GPO        │  │ - File Srv   │  │ - PS Remoting│          │
 │  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘          │
 │         │                 │                 │                   │
-│  ═══════╪═════════════════╪═════════════════╪═══════════════    │
-│         │     umbrella.corp domain          │                   │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
+│  │    WS02      │  │    WS03      │  │    WS04      │          │
+│  │  Windows 10  │  │  Windows 10  │  │  Windows 10  │          │
+│  │   .56.13     │  │   .56.14     │  │   .56.15     │          │
+│  │              │  │              │  │              │          │
+│  │ - RSAT       │  │ - RSAT       │  │ - RSAT       │          │
+│  │ - RDP        │  │ - RDP        │  │ - RDP        │          │
+│  │ - PS Remoting│  │ - PS Remoting│  │ - PS Remoting│          │
+│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘          │
 │         │                 │                 │                   │
-│  ┌──────┴─────────────────┴─────────────────┴───────┐          │
-│  │                  NAT Network                       │          │
-│  └──────────────────────┬────────────────────────────┘          │
+│  ┌──────────────┐                                               │
+│  │  UBSRV01     │                                               │
+│  │ Ubuntu Server│                                               │
+│  │   .56.20     │                                               │
+│  │              │                                               │
+│  │ - SSSD/AD    │                                               │
+│  │ - Domain     │                                               │
+│  │   Joined     │                                               │
+│  └──────┬───────┘                                               │
+│         │                                                       │
+│  ═══════╪═══════════════════════════════════════════════════     │
+│         │     umbrella.corp domain                              │
+│         │                                                       │
+│  ┌──────┴────────────────────────────────────────────────┐      │
+│  │                  NAT Network                           │      │
+│  └──────────────────────┬─────────────────────────────────┘      │
 │                         │                                       │
 │                  ┌──────┴───────┐                               │
 │                  │    KALI      │                               │
@@ -57,8 +77,8 @@
 |----------|---------|------|
 | Vagrant | ≥ 2.3 | [vagrantup.com](https://www.vagrantup.com/downloads) |
 | VirtualBox | ≥ 7.0 | [virtualbox.org](https://www.virtualbox.org/wiki/Downloads) |
-| RAM | ≥ 16 GB | — |
-| Disk | ≥ 80 GB free | — |
+| RAM | ≥ 24 GB | — |
+| Disk | ≥ 200 GB free | — |
 
 ### Deploy the Lab
 
@@ -142,7 +162,8 @@ Anonymous SMB ──► Cleartext Creds ──► ACL Abuse ──► Kerberoast
 ├── provisioning/
 │   ├── dc01.ps1                    # DC promotion and forest creation
 │   ├── srv01.ps1                   # IIS + SMB share setup
-│   └── ws01.ps1                    # Workstation domain join
+│   ├── ws01.ps1                    # Workstation domain join (WS01–WS04)
+│   └── ubsrv01.sh                  # Ubuntu Server domain join
 ├── scripts/
 │   ├── setup-ad.ps1                # OUs, users, groups, SPNs
 │   ├── setup-vulns.ps1             # Deliberate misconfigurations

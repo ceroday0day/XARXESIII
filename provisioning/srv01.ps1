@@ -177,9 +177,13 @@ IT Security Operations
     @"
 Umbrella Corporation - Server Inventory (Q1 2024)
 ================================================
-DC01    192.168.56.10   Domain Controller   Windows Server 2019
-SRV01   192.168.56.11   File/Web Server     Windows Server 2016
-WS01    192.168.56.12   IT Workstation      Windows 10
+DC01      192.168.56.10   Domain Controller   Windows Server 2019
+SRV01     192.168.56.11   File/Web Server     Windows Server 2016
+WS01      192.168.56.12   IT Workstation      Windows 10
+WS02      192.168.56.13   HR Workstation      Windows 10
+WS03      192.168.56.14   Research Workst.    Windows 10
+WS04      192.168.56.15   Mgmt Workstation    Windows 10
+UBSRV01   192.168.56.20   Linux Server        Ubuntu Server 22.04
 
 VPN Gateway: vpn.umbrella.corp:443
 Intranet:    http://srv01:8080/intranet/

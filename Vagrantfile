@@ -13,6 +13,10 @@ DOMAIN_NETBIOS = "UMBRELLA"
 DC_IP         = "192.168.56.10"
 SRV_IP        = "192.168.56.11"
 WS_IP         = "192.168.56.12"
+WS02_IP       = "192.168.56.13"
+WS03_IP       = "192.168.56.14"
+WS04_IP       = "192.168.56.15"
+UBSRV_IP      = "192.168.56.20"
 KALI_IP       = "192.168.56.100"
 
 # Shared administrator credentials for provisioning
@@ -107,6 +111,100 @@ Vagrant.configure("2") do |config|
     ]
   end
 
+  # ---------- WS02 — HR Workstation (Windows 10) ----------
+  config.vm.define "ws02" do |ws|
+    ws.vm.box = "gusztavvargadr/windows-10"
+    ws.vm.hostname = "WS02"
+    ws.vm.network "private_network", ip: WS02_IP, virtualbox__intnet: "umbrella_net"
+    ws.vm.communicator = "winrm"
+    ws.winrm.username = ADMIN_USER
+    ws.winrm.password = ADMIN_PASS
+    ws.winrm.transport = :plaintext
+    ws.winrm.basic_auth_only = true
+    ws.vm.boot_timeout = 900
+    ws.vm.guest = :windows
+
+    ws.vm.provider "virtualbox" do |vb|
+      vb.name   = "0xLab-WS02"
+      vb.memory = 2048
+      vb.cpus   = 2
+      vb.gui    = false
+    end
+
+    ws.vm.provision "shell", path: "provisioning/ws01.ps1", args: [
+      DOMAIN, DOMAIN_NETBIOS, ADMIN_PASS, DC_IP
+    ]
+  end
+
+  # ---------- WS03 — Research Workstation (Windows 10) ----------
+  config.vm.define "ws03" do |ws|
+    ws.vm.box = "gusztavvargadr/windows-10"
+    ws.vm.hostname = "WS03"
+    ws.vm.network "private_network", ip: WS03_IP, virtualbox__intnet: "umbrella_net"
+    ws.vm.communicator = "winrm"
+    ws.winrm.username = ADMIN_USER
+    ws.winrm.password = ADMIN_PASS
+    ws.winrm.transport = :plaintext
+    ws.winrm.basic_auth_only = true
+    ws.vm.boot_timeout = 900
+    ws.vm.guest = :windows
+
+    ws.vm.provider "virtualbox" do |vb|
+      vb.name   = "0xLab-WS03"
+      vb.memory = 2048
+      vb.cpus   = 2
+      vb.gui    = false
+    end
+
+    ws.vm.provision "shell", path: "provisioning/ws01.ps1", args: [
+      DOMAIN, DOMAIN_NETBIOS, ADMIN_PASS, DC_IP
+    ]
+  end
+
+  # ---------- WS04 — Management Workstation (Windows 10) ----------
+  config.vm.define "ws04" do |ws|
+    ws.vm.box = "gusztavvargadr/windows-10"
+    ws.vm.hostname = "WS04"
+    ws.vm.network "private_network", ip: WS04_IP, virtualbox__intnet: "umbrella_net"
+    ws.vm.communicator = "winrm"
+    ws.winrm.username = ADMIN_USER
+    ws.winrm.password = ADMIN_PASS
+    ws.winrm.transport = :plaintext
+    ws.winrm.basic_auth_only = true
+    ws.vm.boot_timeout = 900
+    ws.vm.guest = :windows
+
+    ws.vm.provider "virtualbox" do |vb|
+      vb.name   = "0xLab-WS04"
+      vb.memory = 2048
+      vb.cpus   = 2
+      vb.gui    = false
+    end
+
+    ws.vm.provision "shell", path: "provisioning/ws01.ps1", args: [
+      DOMAIN, DOMAIN_NETBIOS, ADMIN_PASS, DC_IP
+    ]
+  end
+
+  # ---------- UBSRV01 — Linux Server (Ubuntu Server, domain-joined) ----------
+  config.vm.define "ubsrv01" do |ub|
+    ub.vm.box = "ubuntu/jammy64"
+    ub.vm.hostname = "ubsrv01"
+    ub.vm.network "private_network", ip: UBSRV_IP, virtualbox__intnet: "umbrella_net"
+    ub.vm.boot_timeout = 600
+
+    ub.vm.provider "virtualbox" do |vb|
+      vb.name   = "0xLab-UBSRV01"
+      vb.memory = 2048
+      vb.cpus   = 2
+      vb.gui    = false
+    end
+
+    ub.vm.provision "shell", path: "provisioning/ubsrv01.sh", args: [
+      DOMAIN, DOMAIN_NETBIOS, ADMIN_PASS, DC_IP
+    ]
+  end
+
   # ---------- KALI — Attacker Machine (Kali Linux) ----------
   config.vm.define "kali" do |kali|
     kali.vm.box = "kalilinux/rolling"
@@ -162,6 +260,10 @@ Vagrant.configure("2") do |config|
       echo "#{DC_IP}  dc01.umbrella.corp dc01 umbrella.corp" >> /etc/hosts
       echo "#{SRV_IP}  srv01.umbrella.corp srv01"             >> /etc/hosts
       echo "#{WS_IP}  ws01.umbrella.corp ws01"               >> /etc/hosts
+      echo "#{WS02_IP}  ws02.umbrella.corp ws02"              >> /etc/hosts
+      echo "#{WS03_IP}  ws03.umbrella.corp ws03"              >> /etc/hosts
+      echo "#{WS04_IP}  ws04.umbrella.corp ws04"              >> /etc/hosts
+      echo "#{UBSRV_IP}  ubsrv01.umbrella.corp ubsrv01"      >> /etc/hosts
 
       echo "[*] Making attack scripts executable..."
       chmod +x /opt/0xlab/auto-enum.sh 2>/dev/null || true
