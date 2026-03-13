@@ -35,6 +35,9 @@ Vagrant.configure("2") do |config|
     dc.winrm.password = ADMIN_PASS
     dc.winrm.transport = :plaintext
     dc.winrm.basic_auth_only = true
+    dc.winrm.timeout = 1800
+    dc.winrm.retry_limit = 30
+    dc.winrm.retry_delay = 10
     dc.vm.boot_timeout = 900
     dc.vm.guest = :windows
 
@@ -71,6 +74,9 @@ Vagrant.configure("2") do |config|
     srv.winrm.password = ADMIN_PASS
     srv.winrm.transport = :plaintext
     srv.winrm.basic_auth_only = true
+    srv.winrm.timeout = 1800
+    srv.winrm.retry_limit = 30
+    srv.winrm.retry_delay = 10
     srv.vm.boot_timeout = 900
     srv.vm.guest = :windows
 
@@ -96,6 +102,9 @@ Vagrant.configure("2") do |config|
     ws.winrm.password = ADMIN_PASS
     ws.winrm.transport = :plaintext
     ws.winrm.basic_auth_only = true
+    ws.winrm.timeout = 1800
+    ws.winrm.retry_limit = 30
+    ws.winrm.retry_delay = 10
     ws.vm.boot_timeout = 900
     ws.vm.guest = :windows
 
@@ -121,6 +130,9 @@ Vagrant.configure("2") do |config|
     ws.winrm.password = ADMIN_PASS
     ws.winrm.transport = :plaintext
     ws.winrm.basic_auth_only = true
+    ws.winrm.timeout = 1800
+    ws.winrm.retry_limit = 30
+    ws.winrm.retry_delay = 10
     ws.vm.boot_timeout = 900
     ws.vm.guest = :windows
 
@@ -146,6 +158,9 @@ Vagrant.configure("2") do |config|
     ws.winrm.password = ADMIN_PASS
     ws.winrm.transport = :plaintext
     ws.winrm.basic_auth_only = true
+    ws.winrm.timeout = 1800
+    ws.winrm.retry_limit = 30
+    ws.winrm.retry_delay = 10
     ws.vm.boot_timeout = 900
     ws.vm.guest = :windows
 
@@ -171,6 +186,9 @@ Vagrant.configure("2") do |config|
     ws.winrm.password = ADMIN_PASS
     ws.winrm.transport = :plaintext
     ws.winrm.basic_auth_only = true
+    ws.winrm.timeout = 1800
+    ws.winrm.retry_limit = 30
+    ws.winrm.retry_delay = 10
     ws.vm.boot_timeout = 900
     ws.vm.guest = :windows
 

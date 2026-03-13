@@ -237,6 +237,7 @@ umbrella.corp
 | [Vulnerabilities](docs/vulnerabilities.md) | Deep-dive into each vulnerability with real-world context |
 | [Remediation](docs/remediation.md) | Blue team guide — how to fix each misconfiguration |
 | [Attack Chain](attacker/attack-chain.md) | Step-by-step exploitation walkthrough |
+| [Troubleshooting](docs/troubleshooting.md) | Common issues and solutions (WinRM errors, networking, etc.) |
 
 ---
 
