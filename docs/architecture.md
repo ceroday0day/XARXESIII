@@ -18,6 +18,10 @@ when chained together.
 | DC01 | Primary Domain Controller | 192.168.56.10 | Windows Server 2019 |
 | SRV01 | File Server + IIS Intranet | 192.168.56.11 | Windows Server 2016 |
 | WS01 | IT Workstation | 192.168.56.12 | Windows 10 |
+| WS02 | HR Workstation | 192.168.56.13 | Windows 10 |
+| WS03 | Research Workstation | 192.168.56.14 | Windows 10 |
+| WS04 | Management Workstation | 192.168.56.15 | Windows 10 |
+| UBSRV01 | Linux Server (domain-joined) | 192.168.56.20 | Ubuntu Server 22.04 |
 | KALI | Attacker Machine | 192.168.56.100 | Kali Linux (Rolling) |
 
 ### Network Configuration
@@ -65,6 +69,39 @@ when chained together.
 | 445 | TCP | SMB |
 | 3389 | TCP | RDP |
 | 5985 | TCP | WinRM |
+
+#### WS02 (192.168.56.13)
+
+| Port | Protocol | Service |
+|------|----------|---------|
+| 135 | TCP | RPC |
+| 445 | TCP | SMB |
+| 3389 | TCP | RDP |
+| 5985 | TCP | WinRM |
+
+#### WS03 (192.168.56.14)
+
+| Port | Protocol | Service |
+|------|----------|---------|
+| 135 | TCP | RPC |
+| 445 | TCP | SMB |
+| 3389 | TCP | RDP |
+| 5985 | TCP | WinRM |
+
+#### WS04 (192.168.56.15)
+
+| Port | Protocol | Service |
+|------|----------|---------|
+| 135 | TCP | RPC |
+| 445 | TCP | SMB |
+| 3389 | TCP | RDP |
+| 5985 | TCP | WinRM |
+
+#### UBSRV01 (192.168.56.20)
+
+| Port | Protocol | Service |
+|------|----------|---------|
+| 22 | TCP | SSH |
 
 ---
 
@@ -152,7 +189,15 @@ The lab deploys in a specific order to handle dependencies:
       ↓
 5. WS01 — Join domain → Install RSAT → Enable RDP → Reboot
       ↓
-6. KALI — Install tools → Configure /etc/hosts → Sync attack scripts
+6. WS02 — Join domain → Install RSAT → Enable RDP → Reboot
+      ↓
+7. WS03 — Join domain → Install RSAT → Enable RDP → Reboot
+      ↓
+8. WS04 — Join domain → Install RSAT → Enable RDP → Reboot
+      ↓
+9. UBSRV01 — Install realmd/SSSD → Join domain via realm join
+      ↓
+10. KALI — Install tools → Configure /etc/hosts → Sync attack scripts
 ```
 
 ### Resource Requirements
@@ -162,10 +207,14 @@ The lab deploys in a specific order to handle dependencies:
 | DC01 | 4 GB | 2 cores | ~40 GB |
 | SRV01 | 2 GB | 2 cores | ~40 GB |
 | WS01 | 2 GB | 2 cores | ~40 GB |
+| WS02 | 2 GB | 2 cores | ~40 GB |
+| WS03 | 2 GB | 2 cores | ~40 GB |
+| WS04 | 2 GB | 2 cores | ~40 GB |
+| UBSRV01 | 2 GB | 2 cores | ~10 GB |
 | KALI | 4 GB | 2 cores | ~30 GB |
-| **Total** | **12 GB** | **8 cores** | **~150 GB** |
+| **Total** | **20 GB** | **16 cores** | **~280 GB** |
 
-> **Minimum host:** 16 GB RAM recommended (VirtualBox overhead + host OS).
+> **Minimum host:** 24 GB RAM recommended (VirtualBox overhead + host OS).
 
 ---
 
